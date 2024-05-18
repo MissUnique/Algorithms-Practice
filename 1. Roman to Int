@@ -1,0 +1,66 @@
+#include<iostream>
+
+using namespace std;
+
+class Solution {
+private:
+    int num = 0, v = 0, prev;
+public:
+    int romanToInt(string s){
+        for (auto c : s) {
+            switch (c){
+                case 'I': v = 1;
+                    break;
+                case 'V': v = 5;
+                    break;
+                case 'X': v = 10;
+                    break;
+                case 'L': v = 50;
+                    break;
+                case 'C': v = 100;
+                    break;
+                case 'D': v = 500;
+                    break;
+                case 'M': v = 1000;
+                    break;
+                default:
+                    return 0;
+            }
+            if ((v == 5 && prev == 1) || (v == 10 && prev == 1)){
+                v = v - 1;
+                num -= 1;
+            }
+            else if ((v == 50 && prev == 10) || (v == 100 && prev == 10)){
+                v = v - 10;
+                num -= 10;
+            }
+            else if ((v == 500 && prev == 100) || (v == 1000 && prev == 100)){
+                v = v - 100;
+                num -= 100;
+            }
+            num += v;
+            prev = v;
+        }
+        cout <<'\n';
+        cout << "Num: ";
+        return num;
+    }
+};
+
+int main() {
+    Solution ans;
+    string s;
+    cin >> s;
+    cout << s << "\n\n";
+    if ((s.length() < 1) || (s.length() > 15)){
+        cout << "Not Allowed!\n";
+        return 0;
+    }
+    int n = ans.romanToInt(s);
+    if (n == 0)
+        cout << "Not a valid Roman Numeral!";
+    else if ((n < 1) || (n > 3999))
+        cout << "Not in range\n";
+    else
+        cout << n;
+}
