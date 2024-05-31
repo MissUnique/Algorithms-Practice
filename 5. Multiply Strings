@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int toInt(char c) {
+    return (int)(c - '0');
+}
+
+int main () {
+    string num1 = "123", num2 = "456";
+    vector<int> vec;
+    int res;
+    string result;
+    for (int i = num1.size()-1; i >= 0; i--){
+        int result_location = num1.size()-1-i;
+        int carry = 0;
+
+        for (int j = num2.size()-1; j >= 0; j--){
+            if (result_location <= (int)vec.size())
+                vec.push_back(0);
+            vec[result_location] += toInt(num1[i]) * toInt(num2[j]) + carry;
+            carry = vec[result_location] / 10;
+            vec[result_location] %= 10;
+            result_location++;
+        }
+
+        if (carry){
+            if (vec.size() <= result_location)
+                vec.push_back(0);
+            vec[result_location] += carry;
+        }
+
+        result = "";
+        bool first_non_zero_found = false;
+        for (int i = vec.size()-1; i >= 0; i--){
+            if (!first_non_zero_found){
+                if (vec[i] != 0)
+                    first_non_zero_found = true;
+                else
+                    continue;
+            }
+
+            result.push_back(vec[i] +'0');
+        }
+    }
+    
+    cout << "Ans: " << result;
+}
