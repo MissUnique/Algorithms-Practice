@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map> 
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+    vector<string> strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
+
+    unordered_map<string, int> labelMap;
+    vector<vector<string>> result;
+
+    for (auto word:strs){
+        string sorted_word = word;
+        sort(sorted_word.begin(), sorted_word.end());
+        if (labelMap.count(sorted_word))
+            result[labelMap[sorted_word]].push_back(word);
+        else{
+            vector<string> temp;
+            temp.push_back(word);
+            result.push_back(temp);
+            labelMap[sorted_word] = result.size()-1;
+        }
+    }
+    for (int i = 0; i < result.size(); i++){
+        for (int j = 0; j < result[i].size(); j++){
+            cout << result[i][j] << '\t';
+        }
+        cout << '\n';
+    }
+    return 0;
+}
