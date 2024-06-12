@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main(){
+    vector<int> nums = {0, 1, 0, 3, 12};
+    int ptr = 0;
+    
+    for (int i = 0; i < nums.size() && ptr < nums.size(); i++){
+        if (nums[i] != 0){
+            ptr++;
+            continue;
+        }
+        else{
+            while (nums[ptr] == 0 && ptr < nums.size()){
+                ptr++;
+                continue;
+            }
+            nums[i] = nums[ptr];
+            nums[ptr] = 0;
+        }
+    }
+    
+    for (int i = 0; i < nums.size(); i++)
+        cout << nums[i] << ' ';
+
+    return 0;
+}
