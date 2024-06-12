@@ -1,0 +1,41 @@
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    string s = "aauav", t = "aaubvx";
+    string short_s, long_s;
+    long_s = s.size() > t.size() ? s : t;
+    short_s = s.size() > t.size() ? t : s;
+
+    if (long_s.size() > (short_s.size()+1))
+        cout << "False!!";
+
+    bool is_found_diff = false;
+    int si = 0, li = 0;
+
+    while (si < short_s.size() && li < long_s.size()){
+        if ((long_s[li] != short_s[si]) && (is_found_diff == false)){
+            if (long_s.size() != short_s.size())
+                li++;
+            else {
+                li++;
+                si++;
+            }
+            is_found_diff = true;
+        }
+        else if ((long_s[li] != short_s[si]) && (is_found_diff == true)){
+            cout << "False!!";
+            return 0;
+        }
+        else {
+            si++;
+            li++;
+        }
+    }
+
+    if (is_found_diff == true || (li < long_s.size()))
+        cout << "True";
+    else
+        cout << "False!";
+}
