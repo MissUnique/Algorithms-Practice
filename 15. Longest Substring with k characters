@@ -1,0 +1,36 @@
+#include <iostream>
+#include <unordered_map>
+
+using namespace std;
+
+int main(){
+    string s = "eceba";
+    int k = 2;
+
+    int l = 0;
+    unordered_map<char, int> myMap;
+    int distinct = 0;
+    int maxLength = 0;
+
+    for (int r = 0; r < s.size(); r++){
+        if (myMap.count(s[r]) == 0)
+            myMap[s[r]] = 0;
+        myMap[s[r]]++;
+
+        if (myMap[s[r]] == 1)
+            distinct++;
+
+        while (distinct > k){
+            myMap[s[l]]--;
+            if (myMap[s[l]] == 0)
+                distinct--;
+            l++;
+        }
+        
+        maxLength = max(maxLength, r-l+1);
+    }
+
+    cout << "Max =  " << maxLength;
+    
+    return 0;
+}
