@@ -1,0 +1,61 @@
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    string queryIP = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"; // 172.16.25.1
+    int pos = 0, l = 0, num, x = 0;
+
+    for (int i = 1; i < 5; i++){
+        if (queryIP[i] == '.' && i < 4)
+            pos = 4;
+        if (queryIP[i] == ':')
+            pos = 6;
+    }
+
+    if (pos == 4){
+        for (int r = 0; r < queryIP.size(); r++){
+            if (!isdigit(queryIP[r]) && queryIP[r] != '.')
+                break;
+
+            if (queryIP[r] == '.' || r == queryIP.size()-1){
+                x++;
+                if (queryIP[l] == '0')
+                    break;
+                num = stoi(queryIP.substr(l, r-l+1));
+                if (num > 255)
+                    break;
+                l = r+1;
+            }
+
+            if (r == queryIP.size()-1 && x == 4){
+                cout << "IPv4";
+                return 0;
+            }
+        }
+    }
+
+    if (pos == 6){
+        for (int r = 0; r < queryIP.size(); r++){
+            if (!isdigit(queryIP[r]) && queryIP[r] != ':' &&
+                !(queryIP[r] >= 'a' && queryIP[r] <= 'f') &&
+                !(queryIP[r] >= 'A' && queryIP[r] <= 'F'))
+                break;
+
+            if (queryIP[r] == ':' || r == queryIP.size()-1){
+                x++;
+                if (queryIP.substr(l, r-l).length() > 4)
+                    break;
+                l = r+1;
+            }
+
+            if (r == queryIP.size()-1 && x == 8){
+                cout << "IPv6";
+                return 0;
+            }
+        }
+    }
+
+    cout << "Neither";
+    return 0;
+}
